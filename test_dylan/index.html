@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Puissance4_01.svg/1200px-Puissance4_01.svg.png" />
+    <title>LDP - Connect 4</title>
+</head>
+<body>
+    <div>
+        <div id="gameboard">
+            <div id="gameboard_header">
+                <h1>LDP CONNECT 4</h1>
+
+            </div>
+            <div id="gameboard_grille">
+                <canvas id="grid" width="1500" height="500"></canvas>
+
+                <canvas id="tokens" width="900" height="500"></canvas>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script>
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var raf;
+
+        var ball = {
+        x: 100,
+        y: 100,
+        vx: 0,
+        vy: 2,
+        radius: 25,
+        color: 'red',
+        draw: function() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2, true);
+            ctx.closePath();
+            ctx.fillStyle = this.color;
+            ctx.fill();
+        }
+        };
+
+        function draw() {
+            ctx.clearRect(0,0, canvas.width, canvas.height);
+            ball.draw();
+            ball.y += ball.vy;
+            if(ball.y< canvas.height-ball.radius){
+                if (ball.y + ball.vy > canvas.height-ball.radius ) {
+                    ball.vy *= .6;
+                    ball.vy = -ball.vy;
+                }
+                console.log(ball.vy)
+            ball.vy *= .99;
+            ball.vy += .25;
+            raf = window.requestAnimationFrame(draw);
+            }
+        }
+
+        
+        raf = window.requestAnimationFrame(draw);
+        ball.draw();
+    </script>
+
+
+</body>
+</html>
+
+
+
+
