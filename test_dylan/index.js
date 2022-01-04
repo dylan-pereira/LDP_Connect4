@@ -1,7 +1,13 @@
+let tokensRadius = 50;
+let spaceBetween = 10;
+let playerColor = "red";
+
 for(let i = 0; i<7; i++){
     let button = document.createElement("div");
     button.id="button"+i;
     button.addEventListener("click", onButtonClick);
+    button.addEventListener("mouseenter", onButtonOver);
+
     document.getElementById("gameboard_buttons").appendChild(button);
 
 }
@@ -10,10 +16,14 @@ function onButtonClick(){
     console.log(this.id.slice(this.id.length - 1));
 }
 
+function onButtonOver(){
+    console.log(this.style);
+    this.style.visibility = "hidden";
+}
 
 
-let tokensRadius = 50;
-let spaceBetween = 10;
+
+
 
 var c = document.getElementById("grid");
 var ctx = c.getContext("2d");
@@ -44,7 +54,7 @@ y: 0,
 vx: 0,
 vy: 2,
 radius: tokensRadius,
-color: 'red',
+color: playerColor,
 draw: function() {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2, true);
