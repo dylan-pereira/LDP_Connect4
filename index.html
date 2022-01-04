@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +9,20 @@
     <title>LDP - Connect 4</title>
 </head>
 <body>
-    <div>
+    <div id="container">
+        <div id="sideMenu">
+            <p>Select a maintenance drone:</p>
+            <div>
+            <input type="radio" id="huey" name="drone" value="huey"
+                    checked>
+            <label for="huey">Huey</label>
+            </div>
+
+            <div>
+            <input type="radio" id="dewey" name="drone" value="dewey">
+            <label for="dewey">Dewey</label>
+            </div>
+        </div>
         <div id="gameboard">
             <div id="gameboard_header">
                 <h1>LDP CONNECT 4</h1>
@@ -24,6 +37,7 @@
                 <script type="text/javascript" src="index.js"></script>
             </div>
         </div>
+        
     </div>
 </body>
 </html>
