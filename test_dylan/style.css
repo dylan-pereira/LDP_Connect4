@@ -1,3 +1,16 @@
 canvas{
     position:fixed;
 }
+
+#gameboard_buttons{
+    display:flex;
+}
+
+[id^=button]{
+    width : 100px;
+    height : 100px;
+    margin : 7px;
+    border-radius : 10px;
+    border-style: dashed;
+    border-color: grey;
+}
