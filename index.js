@@ -1,30 +1,66 @@
-let tokensRadius = 50;
+let tokensRadius = 45;
 let spaceBetween = 10;
-let playerColor = "green";
+let playerColor = "yellow";
 let buttonEnabled = true;
-createGrid();
+let grid_width = 7*(tokensRadius+spaceBetween)*2;
+let grid_height = 6*(tokensRadius+spaceBetween)*2;
+
+createSideMenu();
+createGameBoard();
 addToken(3);
 
-for(let i = 0; i<7; i++){
-    let button = document.createElement("div");
-    button.id="button"+i;
-    button.addEventListener("click", onButtonClick);
-    button.addEventListener("mouseover", onButtonEnter);
 
-    document.getElementById("gameboard_buttons").appendChild(button);
+
+
+
+
+
+function createSideMenu(){
+
+    document.querySelector("input[name=activeIA]").addEventListener('change', function() {
+    if (this.checked) {
+        console.log("TODO:Enable IA");
+    } else {
+        console.log("TODO:Disable IA");
+    }
+    });
+
+    document.getElementById("restartButton").addEventListener('click', function() {
+        resetGrid();
+    });
+
+    
+
+    console.log(document.querySelectorAll("input[name='startplayer']"))
+    document.querySelectorAll("input[name='startplayer']").forEach(element => element.addEventListener('click', function() {
+        console.log("TODO: Implement choice : " + this.value);
+    }));
+    
+
 
 }
 
-function onButtonClick(){
-    console.log(this.id.slice(this.id.length - 1));
-    addToken(this.id.slice(this.id.length - 1));
-}
+function createHeader(){
+    for(let i = 0; i<7; i++){
+        let button = document.createElement("div");
+        button.id="button"+i;
+        button.style.width=(tokensRadius-5)*2+"px";
+        button.style.height=(tokensRadius-5)*2+"px";
+    
+        button.addEventListener("click", onButtonClick);
+    
+        document.getElementById("gameboard_buttons").appendChild(button);
+    
+    }
+    
+    function onButtonClick(){
+        addToken(this.id.slice(this.id.length - 1));
+    }
 
-
-
-function onButtonEnter(){
-    //console.log(this.style);
-    //this.style.visibility = "hidden";
+    function onButtonEnter(){
+        //console.log(this.style);
+        //this.style.visibility = "hidden";
+    }
 }
 
 function addToken(column, row = 0){
@@ -47,6 +83,8 @@ function addToken(column, row = 0){
                 ctx.closePath();
                 ctx.fillStyle = this.color;
                 ctx.fill();
+                ctx.strokeStyle = "grey";
+                ctx.stroke();
                 ctx.closePath();
             }
         };
@@ -92,21 +130,105 @@ function addToken(column, row = 0){
 }
 
 function createGrid(){
-    var c = document.getElementById("grid");
-    var ctx = c.getContext("2d");
+    let tokens = document.createElement("canvas");
+    tokens.id="tokens";
+    tokens.width=grid_width;
+    tokens.height=grid_height
+    document.getElementById("gameboard_body").appendChild(tokens);
 
-    ctx.fillStyle = "blue";
-    ctx.fillRect(0, 0, 840, 720);
 
+    let grid = document.createElement("canvas");
+    grid.id="grid";
+    grid.width=grid_width;
+    grid.height=grid_height
+    grid.style.zIndex="1";
+    document.getElementById("gameboard_body").appendChild(grid);
+    document.getElementById("gameboard_body").style.height=grid_height+"px";
+
+    var ctx = grid.getContext("2d");
+
+
+    ctx.beginPath();
+    ctx.moveTo(grid_height,grid_height);
+    ctx.arcTo(0,grid_height,0,0,10);
+    ctx.arcTo(0,0,grid_height,0,10);
+    ctx.arcTo(grid_width,0,grid_height,grid_height,10);
+    ctx.arcTo(grid_width,grid_height,0,grid_height,10);
+    ctx.fillStyle = "#0030da";
+    ctx.fill();
 
     ctx.globalCompositeOperation = "destination-out";
     for(let j = 0; j< 6 ; j++){
         for(let i = 0; i< 7 ; i++){
             ctx.beginPath();
-            ctx.arc(spaceBetween+ tokensRadius + (tokensRadius*2+ spaceBetween*2)*i, 720-tokensRadius-spaceBetween - (tokensRadius*2+ spaceBetween*2)*j, tokensRadius, 0, 2 * Math.PI, false);
+            ctx.arc(spaceBetween+ tokensRadius + (tokensRadius*2+ spaceBetween*2)*i, grid_height-tokensRadius-spaceBetween - (tokensRadius*2+ spaceBetween*2)*j, tokensRadius, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "red";
             ctx.fill();
             ctx.closePath();
             
         }
     }
+
+    
+}
+
+function resetGrid(){
+    document.getElementById("tokens").remove();
+    document.getElementById("grid").remove();
+    createGrid();
+}
+
+function createModal(){
+    let mymodal = document.createElement("div");
+    mymodal.setAttribute("class", "modal");
+    mymodal.id="myModal";
+
+    let div = document.createElement("div");
+    div.setAttribute("class", "modal-content");
+    
+    let close = document.createElement("span");
+    close.setAttribute("class", "close");
+    close.innerHTML="&times;";
+    div.appendChild(close);
+
+
+    let p = document.createElement("p");
+    p.innerHTML="TODO: ADD PLAYER NAME";
+    div.appendChild(p);
+
+    mymodal.appendChild(div);
+    document.body.appendChild(mymodal);
+
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal
+    btn.onclick = function() {
+    modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+    modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+    }
+
+}
+
+function createGameBoard(){
+    createHeader();
+    createGrid();
+    createModal();
 }

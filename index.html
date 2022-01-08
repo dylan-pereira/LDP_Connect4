@@ -10,35 +10,43 @@
 </head>
 <body>
     <div id="container">
-        <div id="sideMenu">
-            <p>Select a maintenance drone:</p>
+        <div id="sideMenu" class="border">
+            <input type="checkbox" id="activeIA" name="activeIA" checked>
+            <label> Active IA</label>
+            <p style ="font-weight: bold;">Starting player</p>
             <div>
-            <input type="radio" id="huey" name="drone" value="huey"
+            <input type="radio" id="player1" name="startplayer" value="player1"
                     checked>
-            <label for="huey">Huey</label>
+            <label for="player1">Player 1</label>
             </div>
 
             <div>
-            <input type="radio" id="dewey" name="drone" value="dewey">
-            <label for="dewey">Dewey</label>
+            <input type="radio" id="player2" name="startplayer" value="player2">
+            <label for="player2">Player 2</label>
             </div>
+            <button id="restartButton" type="button">New game !</button>
+            
         </div>
-        <div id="gameboard">
+        <div id="gameboard" class="border">
             <div id="gameboard_header">
                 <h1>LDP CONNECT 4</h1>
                 <div id="gameboard_buttons">
-                    
                 </div>
-
             </div>
-            <div id="gameboard_grille">
-                <canvas id="grid" width="840" height="720" style=" z-index: 1;"></canvas>
-                <canvas id="tokens" width="840" height="720" ></canvas>
-                <script type="text/javascript" src="index.js"></script>
+            <div id="gameboard_body">
             </div>
         </div>
         
     </div>
+
+<!-- Trigger/Open The Modal -->
+<button id="myBtn">Open Modal</button>
+
+
+
+
+<script type="text/javascript" src="index.js"></script>
+
 </body>
 </html>
 
