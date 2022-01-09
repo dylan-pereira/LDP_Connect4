@@ -1,12 +1,15 @@
 class Jeton {
-    constructor(id, position_largeur, position_hauteur) {
+    constructor(id, position_largeur, position_hauteur, color) {
         this.id = id;
         this.position_largeur = position_largeur;
         this.position_hauteur = position_hauteur;
+        this.color = color;
     }
 
-    tomber(){
-        // tombe de case en case jusqu'a ne plus pouvoir
+    getColor(){
+        return this.color;
     }
+
+
  }
  
