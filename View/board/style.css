@@ -1,5 +1,34 @@
-#grille{
-    height: 720px;
-    width: 840px;
-    background: rgb(22, 33, 138);
+canvas{
+    position:fixed;
+}
+
+#gameboard_buttons{
+    display:flex;
+}
+
+[id^=button]{
+    width : 100px;
+    height : 100px;
+    margin : 7px;
+    border-radius : 10px;
+    border-style: dashed;
+    border-color: grey;
+}
+
+#sideMenu{
+    background-color: hotpink;
+    border-radius : 10px;
+}
+
+#gameboard{
+    border-radius : 10px;
+    border-color: grey;
+    border-style: groove;
+}
+
+#container{
+    display: flex;
+}
+#container>div{
+    margin: 30px;
 }
