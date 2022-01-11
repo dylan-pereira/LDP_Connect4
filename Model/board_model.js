@@ -3,6 +3,10 @@ class Grille {
         this.largeur = 7
         this.hauteur = 6
         this.tableau = new Array(this.largeur);
+        this.activeIA = false;
+        this.player1 = "Player1";
+        this.player2 = "Player2";
+        this.activePlayer = this.player1;
 
         for (var colonne = 0; colonne < this.largeur; colonne++){
             current_colonne = new Array(this.hauteur);
@@ -13,7 +17,13 @@ class Grille {
         }
     }
 
-    ajouterJeton(colonne, jeton){
+    addToken(colonne){
+        if(this.activePLayer==this.player1){
+            token = new Token("RED");
+        } else {
+            token = new Token("YELLOW");
+        }
+        
         ligne = 0
         while (this.tableau[colonne][ligne+1] != NULL){
             ligne++;
