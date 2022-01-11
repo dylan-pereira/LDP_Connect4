@@ -1,6 +1,6 @@
 let tokensRadius = 45;
 let spaceBetween = 10;
-let playerColor = "yellow";
+let playerColor = "red";
 let buttonEnabled = true;
 let grid_width = 7*(tokensRadius+spaceBetween)*2;
 let grid_height = 6*(tokensRadius+spaceBetween)*2;
@@ -8,11 +8,6 @@ let grid_height = 6*(tokensRadius+spaceBetween)*2;
 createSideMenu();
 createGameBoard();
 addToken(3);
-
-
-
-
-
 
 
 function createSideMenu(){
@@ -26,6 +21,7 @@ function createSideMenu(){
     });
 
     document.getElementById("restartButton").addEventListener('click', function() {
+        console.log("TODO: Implement reset tab stocké en back");
         resetGrid();
     });
 
@@ -48,7 +44,13 @@ function createHeader(){
         button.style.height=(tokensRadius-5)*2+"px";
     
         button.addEventListener("click", onButtonClick);
-    
+        button.addEventListener("mouseenter", function(event){
+            event.target.style.backgroundColor = playerColor;
+        });
+        button.addEventListener("mouseout", function(event){
+            event.target.style.backgroundColor = "";
+        });
+        
         document.getElementById("gameboard_buttons").appendChild(button);
     
     }
@@ -57,10 +59,7 @@ function createHeader(){
         addToken(this.id.slice(this.id.length - 1));
     }
 
-    function onButtonEnter(){
-        //console.log(this.style);
-        //this.style.visibility = "hidden";
-    }
+    
 }
 
 function addToken(column, row = 0){
@@ -68,7 +67,6 @@ function addToken(column, row = 0){
         buttonEnabled = false;
         var canvas = document.getElementById('tokens');
         var ctx = canvas.getContext('2d');
-        var raf;
 
         var ball = {
             x: (tokensRadius+spaceBetween)+((tokensRadius+spaceBetween)*2)*column,
@@ -99,7 +97,6 @@ function addToken(column, row = 0){
                 if (ball.y + ball.vy > canvas.height-spaceBetween-tokensRadius-((spaceBetween+tokensRadius)*2)*row ) {
                     ball.vy *= .6;
                     ball.vy = -ball.vy;
-
                 }
                 
             ball.vy *= .99;
@@ -107,17 +104,17 @@ function addToken(column, row = 0){
             raf = window.requestAnimationFrame(draw);
             }else{
 
-                // var canvastest = document.getElementById('grid');
-                // var ctxtest = canvastest.getContext('2d');
-                // console.log(ball)
-                // ctxtest.beginPath();
-                // ctxtest.arc(75, 75, 50, 0, 2 * Math.PI);
-                // ctxtest.fillStyle = 'red';
+                let grid = document.getElementById('grid');
+                let ctx = grid.getContext('2d');
+                ctx.globalCompositeOperation = "destination-over";
+                
+                ctx.beginPath();
 
-                // ctxtest.fill();
-                // ctxtest.closePath();
+                ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2, true);
+                ctx.fillStyle = ball.color;
 
-
+                ctx.fill();
+                ctx.closePath();
 
                 buttonEnabled = true;
             }
@@ -156,6 +153,8 @@ function createGrid(){
     ctx.arcTo(grid_width,grid_height,0,grid_height,10);
     ctx.fillStyle = "#0030da";
     ctx.fill();
+    ctx.beginPath();
+
 
     ctx.globalCompositeOperation = "destination-out";
     for(let j = 0; j< 6 ; j++){
@@ -199,30 +198,19 @@ function createModal(){
     mymodal.appendChild(div);
     document.body.appendChild(mymodal);
 
-    // Get the modal
     var modal = document.getElementById("myModal");
-
-    // Get the button that opens the modal
     var btn = document.getElementById("myBtn");
-
-    // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks on the button, open the modal
     btn.onclick = function() {
-    modal.style.display = "block";
+        modal.style.display = "block";
     }
-
-    // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
-    modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-    if (event.target == modal) {
         modal.style.display = "none";
     }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
     }
 
 }
