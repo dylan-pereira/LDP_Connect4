@@ -34,7 +34,7 @@ class Grille {
 
     is_winner(jeton){
         console.log("is_winner test")
-        if(this.check_colonnes(jeton) || this.check_lignes(jeton)){
+        if(/*this.check_colonnes(jeton) || this.check_lignes(jeton) ||*/ this.check_diags(jeton)){
             console.log("ca marche tu as gagné !!!")
         }
     }
@@ -61,6 +61,44 @@ class Grille {
         return false
     }
 
+    check_diags(jeton){
+        var diagsRight, diagsLeft = false;
+        
+        for (let ligne = 0; ligne < this.hauteur; ligne++) {
+            for (let colonne = 0; colonne < this.largeur; colonne++) {
+                diagsRight = this.checkDiagRight(colonne, ligne, jeton, 0) == 2;
+                diagsLeft = this.checkDiagLeft(colonne, ligne, jeton, 0) == 2;  
+                if(diagsLeft || diagsRight){
+                    return true;
+                }           
+            }
+        }
+
+        return false; 
+    }
+
+    checkDiagRight(c, l, color, val){
+
+        if(c < 7 && l < 6 && val < 3 && this.tableau[c][l] == color){
+            val = 1 + this.checkDiagRight(c-1, l+1, color, val);
+            return val;
+        } else {
+            return 0;
+        }
+        
+    }
+
+    checkDiagLeft(c, l, color, val){
+
+        if(c < 7 && l < 6 && val < 3 && this.tableau[c][l] == color){
+            val = 1 + this.checkDiagLeft(c+1, l-1, color, val);
+            return val;
+        } else {
+            return 0;
+        }
+        
+    }
+
     to_string(){
         for(let colonne = 0; colonne < this.largeur; colonne++){
             for (let ligne = 0; ligne < this.hauteur; ligne++) {
@@ -68,10 +106,6 @@ class Grille {
             }
             console.log('\n')
         }
-    }
-
-    test(){
-        console.log("Paulin pd");
     }
 
  }
