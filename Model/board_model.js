@@ -90,8 +90,8 @@ class Grille {
 
     checkDiagLeft(c, l, color, val){
 
-        if(c < 7 && l < 6 && val < 3 && this.tableau[c][l] == color){
-            val = 1 + this.checkDiagLeft(c+1, l-1, color, val);
+        if(c >= 0 && l < 6 && val < 3 && this.tableau[c][l] == color){
+            val = 1 + this.checkDiagLeft(c-1, l-1, color, val);
             return val;
         } else {
             return 0;
