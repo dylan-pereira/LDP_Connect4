@@ -66,8 +66,8 @@ class Grille {
         
         for (let ligne = 0; ligne < this.hauteur; ligne++) {
             for (let colonne = 0; colonne < this.largeur; colonne++) {
-                diagsRight = this.checkDiagRight(colonne, ligne, jeton, 0) == 2;
-                diagsLeft = this.checkDiagLeft(colonne, ligne, jeton, 0) == 2;  
+                diagsRight = this.checkDiagRight(colonne, ligne, jeton, 0) == 4;
+                diagsLeft = this.checkDiagLeft(colonne, ligne, jeton, 0) == 4;  
                 if(diagsLeft || diagsRight){
                     return true;
                 }           
@@ -79,7 +79,7 @@ class Grille {
 
     checkDiagRight(c, l, color, val){
 
-        if(c < 7 && l < 6 && val < 3 && this.tableau[c][l] == color){
+        if(c < 7 && l < 6 && val < 5 && this.tableau[c][l] == color){
             val = 1 + this.checkDiagRight(c-1, l+1, color, val);
             return val;
         } else {
@@ -90,7 +90,7 @@ class Grille {
 
     checkDiagLeft(c, l, color, val){
 
-        if(c >= 0 && l < 6 && val < 3 && this.tableau[c][l] == color){
+        if(c >= 0 && l < 6 && val < 5 && this.tableau[c][l] == color){
             val = 1 + this.checkDiagLeft(c-1, l-1, color, val);
             return val;
         } else {
