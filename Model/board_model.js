@@ -34,28 +34,30 @@ class Grille {
 
     is_winner(jeton){
         console.log("is_winner test")
-        if(/*this.check_colonnes(jeton) || this.check_lignes(jeton) ||*/ this.check_diags(jeton)){
+        if(this.check_colonnes(jeton) || this.check_lignes(jeton) || this.check_diags(jeton)){
             console.log("ca marche tu as gagné !!!")
         }
     }
 
     check_colonnes(jeton){
-        let nombre_jeton = 0
         for(let colonne = 0; colonne < this.largeur; colonne++){
-            for (let ligne = 0; ligne < this.hauteur; ligne++) {
-                if(this.tableau[colonne][ligne] == jeton) nombre_jeton ++
-                if(nombre_jeton == 4) return true
+            for (let ligne = 0; ligne < this.hauteur-3; ligne++) {
+                if( this.tableau[colonne][ligne] == jeton && 
+                    this.tableau[colonne][ligne+1] == jeton &&
+                    this.tableau[colonne][ligne+2] == jeton &&
+                    this.tableau[colonne][ligne+3] == jeton ) return true
             }
         }
         return false
     }
 
     check_lignes(jeton){
-        let nombre_jeton = 0
         for(let ligne = 0; ligne < this.hauteur; ligne++){
-            for(let colonne = 0; colonne < this.largeur; colonne++){
-                if(this.tableau[colonne][ligne] ==  jeton) nombre_jeton ++
-                if(nombre_jeton == 4) return true
+            for(let colonne = 0; colonne < this.largeur-3; colonne++){
+                if( this.tableau[colonne][ligne] == jeton && 
+                    this.tableau[colonne+1][ligne] == jeton &&
+                    this.tableau[colonne+2][ligne] == jeton &&
+                    this.tableau[colonne+3][ligne] == jeton ) return true
             }
         }
         return false
@@ -79,7 +81,7 @@ class Grille {
 
     checkDiagRight(c, l, color, val){
 
-        if(c < 7 && l < 6 && val < 5 && this.tableau[c][l] == color){
+        if(c >= 0 && c < 7 && l < 6 && val < 5 && this.tableau[c][l] == color){
             val = 1 + this.checkDiagRight(c-1, l+1, color, val);
             return val;
         } else {
