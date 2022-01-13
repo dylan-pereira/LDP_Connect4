@@ -1,6 +1,7 @@
 let activePlayer = true
 
 class Grille {
+    
     constructor() {
         this.largeur = 7
         this.hauteur = 6
