@@ -24,7 +24,7 @@ createSideMenu(){
 
     document.getElementById("restartButton").addEventListener('click', function() {
         console.log("TODO: Implement reset tab stocké en back");
-        resetGrid();
+        this.resetGrid();
     });
 
     
@@ -39,6 +39,7 @@ createSideMenu(){
 }
 
 createHeader(){
+    console.log("TEST2");
     for(let i = 0; i<7; i++){
         let button = document.createElement("div");
         button.id="button"+i;
@@ -129,6 +130,7 @@ addToken(column, row = 0){
 }
 
 createGrid(){
+    console.log("TEST");
     let tokens = document.createElement("canvas");
     tokens.id="tokens";
     tokens.width=this.grid_width;
@@ -176,10 +178,11 @@ createGrid(){
 resetGrid(){
     document.getElementById("tokens").remove();
     document.getElementById("grid").remove();
-    createGrid();
+    this.createGrid();
 }
 
 createModal(){
+    console.log("TEST3");
     let mymodal = document.createElement("div");
     mymodal.setAttribute("class", "modal");
     mymodal.id="myModal";
@@ -224,6 +227,6 @@ createGameBoard(){
 }
 
 bindAddToken(callback){
-    callback(test);
+    //callback(test);
 }
 }
