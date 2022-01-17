@@ -61,8 +61,7 @@ createHeader(){
     }
     
     function onButtonClick(evt){
-
-        //
+        // Il faut récupérer la ligne grace au addtoken() du model 
         evt.currentTarget.realThis.addToken(this.id.slice(this.id.length - 1),4);
     }
 
