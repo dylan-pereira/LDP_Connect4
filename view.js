@@ -48,7 +48,7 @@ createHeader(){
     
         button.addEventListener("click", onButtonClick);
         button.addEventListener("mouseenter", function(event){
-            event.target.style.backgroundColor = playerColor;
+            event.target.style.backgroundColor = this.playerColor;
         });
         button.addEventListener("mouseout", function(event){
             event.target.style.backgroundColor = "";
@@ -77,7 +77,7 @@ addToken(column, row = 0){
             vx: 0,
             vy: 2,
             radius: this.tokenRadius,
-            color: playerColor,
+            color: this.playerColor,
             draw: function() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2, true);
