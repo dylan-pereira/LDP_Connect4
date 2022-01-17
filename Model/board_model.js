@@ -35,6 +35,8 @@ class Grille {
         } else {
             console.log("Y a plus de place marcel");
         }
+
+        return ligne;
     }
 
     is_winner(jeton) {

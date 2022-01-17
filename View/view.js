@@ -47,6 +47,8 @@ createHeader(){
         button.style.height=(this.tokenRadius-5)*2+"px";
     
         button.addEventListener("click", onButtonClick);
+        button.realThis=this;
+
         button.addEventListener("mouseenter", function(event){
             event.target.style.backgroundColor = this.playerColor;
         });
@@ -55,19 +57,20 @@ createHeader(){
         });
         
         document.getElementById("gameboard_buttons").appendChild(button);
-    
+        
     }
     
-    function onButtonClick(){
-        addToken(this.id.slice(this.id.length - 1));
+    function onButtonClick(evt){
+        // Il faut récupérer la ligne grace au addtoken() du model 
+        evt.currentTarget.realThis.addToken(this.id.slice(this.id.length - 1),4);
     }
 
     
 }
 
 addToken(column, row = 0){
-    if(buttonEnabled){
-        buttonEnabled = false;
+    if(this.buttonEnabled){
+        this.buttonEnabled = false;
         var canvas = document.getElementById('tokens');
         var ctx = canvas.getContext('2d');
 
@@ -91,13 +94,14 @@ addToken(column, row = 0){
         };
     
         
-
+        let raf;
+        let realthis = this;
         function draw() {
             ctx.clearRect(0,0, canvas.width, canvas.height);
             ball.draw();
             ball.y += ball.vy;
-            if(ball.y< canvas.height-this.spaceBetween-this.tokenRadius-((this.spaceBetween+this.tokenRadius)*2)*row){
-                if (ball.y + ball.vy > canvas.height-this.spaceBetween-this.tokenRadius-((this.spaceBetween+this.tokenRadius)*2)*row ) {
+            if(ball.y< canvas.height-realthis.spaceBetween-realthis.tokenRadius-((realthis.spaceBetween+realthis.tokenRadius)*2)*row){
+                if (ball.y + ball.vy > canvas.height-realthis.spaceBetween-realthis.tokenRadius-((realthis.spaceBetween+realthis.tokenRadius)*2)*row ) {
                     ball.vy *= .6;
                     ball.vy = -ball.vy;
                 }
@@ -119,7 +123,7 @@ addToken(column, row = 0){
                 ctx.fill();
                 ctx.closePath();
 
-                buttonEnabled = true;
+                realthis.buttonEnabled = true;
             }
         }
 
