@@ -17,4 +17,4 @@ class Controller {
 
 }
 
-const app = new Controller(new ViewConnect4(), new Grille());
+const app = new Controller(new View(), new Grille())
