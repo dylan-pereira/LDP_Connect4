@@ -1,7 +1,7 @@
 class View {
 
     constructor(){
-        this.tokensRadius = 45;
+        this.tokenRadius = 45;
         this.spaceBetween = 10;
         this.playerColor = "red";
         this.buttonEnabled = true;
@@ -178,11 +178,11 @@ createGrid(){
 resetGrid(){
     document.getElementById("tokens").remove();
     document.getElementById("grid").remove();
-    this.createGrid();
+    createGrid();
 }
 
 createModal(){
-    console.log("TEST3");
+    console.log("TEST")
     let mymodal = document.createElement("div");
     mymodal.setAttribute("class", "modal");
     mymodal.id="myModal";
