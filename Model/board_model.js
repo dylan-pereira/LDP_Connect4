@@ -31,7 +31,7 @@ class Grille {
 
         if (this.tableau[colonne][ligne] == null) {
             this.tableau[colonne][ligne] = token
-            this.is_winner(token)
+            this.is_winner(token, this.tableau)
         } else {
             console.log("Y a plus de place marcel");
         }
@@ -39,64 +39,60 @@ class Grille {
         return ligne;
     }
 
-    is_winner(jeton) {
+    is_winner(jeton, tab) {
         console.log("is_winner test")
-        if(this.check_colonnes(jeton) || this.check_lignes(jeton) || this.check_diags(jeton)){
+        if(this.check_colonnes(jeton, tab) == 4 || this.check_lignes(jeton, tab) == 4 || this.check_diags(jeton, tab) == 4){
             console.log("ca marche tu as gagné !!!")
         }
     }
 
-    check_colonnes(jeton){
+    check_colonnes(jeton, tab ){
         for(let colonne = 0; colonne < this.largeur; colonne++){
             for (let ligne = 0; ligne < this.hauteur-3; ligne++) {
-                if( this.tableau[colonne][ligne] == jeton && 
-                    this.tableau[colonne][ligne+1] == jeton &&
-                    this.tableau[colonne][ligne+2] == jeton &&
-                    this.tableau[colonne][ligne+3] == jeton ) return true
+
+                let value = 0
+                while(value < 4 && tab[colonne][ligne+(value++)] == jeton)
+                return value
             }
         }
         return false
     }
 
-    check_lignes(jeton){
+    check_lignes(jeton, tab){
         for(let ligne = 0; ligne < this.hauteur; ligne++){
             for(let colonne = 0; colonne < this.largeur-3; colonne++){
-                if( this.tableau[colonne][ligne] == jeton && 
-                    this.tableau[colonne+1][ligne] == jeton &&
-                    this.tableau[colonne+2][ligne] == jeton &&
-                    this.tableau[colonne+3][ligne] == jeton ) return true
+
+                let value = 0
+                while(value < 4 && tab[colonne+(value++)][ligne] == jeton)
+                return value
+
             }
         }
         return false
     }
 
-    check_diags(jeton) {
-        var diagsRight, diagsLeft = false;
+    check_diags(jeton, tab) {
         for (let ligne = 0; ligne < this.hauteur; ligne++) {
             for (let colonne = 0; colonne < this.largeur; colonne++) {
-                diagsRight = this.checkDiagRight(colonne, ligne, jeton, 0) == 4;
-                diagsLeft = this.checkDiagLeft(colonne, ligne, jeton, 0) == 4;
-                if (diagsLeft || diagsRight) {
-                    return true;
-                }
+                return Math.max(this.checkDiagRight(colonne, ligne, jeton, 0, tab), this.checkDiagLeft(colonne, ligne, jeton, 0, tab))
             }
         }
 
         return false;
     }
 
-    checkDiagRight(c, l, color, val) {
-        if(c >= 0 && c < 7 && l < 6 && val < 5 && this.tableau[c][l] == color){
-            val = 1 + this.checkDiagRight(c-1, l+1, color, val);
+    checkDiagRight(c, l, color, val, tab) {
+        if(c >= 0 && c < 7 && l < 6 && val < 5 && tab[c][l] == color){
+            val = 1 + this.checkDiagRight(c-1, l+1, color, val, tab);
             return val;
         } else {
             return 0;
         }
     }
 
-    checkDiagLeft(c, l, color, val) {
-        if (c >= 0 && l < 6 && val < 5 && this.tableau[c][l] == color) {
-            val = 1 + this.checkDiagLeft(c - 1, l - 1, color, val);
+    checkDiagLeft(c, l, color, val, tab) {
+        if (c >= 0 && l < 6 && val < 5 && tab[c][l] == color) {
+            val = 1 + this.checkDiagLeft(c - 1, l - 1, color, val, tab);
             return val;
         } else {
             return 0;
@@ -110,6 +106,69 @@ class Grille {
             }
             console.log('\n')
         }
+    }
+
+    minimax(tab, depth, player){
+        if(depth == 0 || this.is_winner(player, tab)){
+            return this.evaluation(tab, player);
+        }
+
+        if(player == "YELLOW"){
+            var maxEval = Number.NEGATIVE_INFINITY
+            for (let i = 0; i < tab.length; i++) {
+                var newTab = this.copyArray(tab)
+
+                var ligne = 0
+                while (newTab[i][ligne + 1] == null && ligne < 5) {
+                    ligne++;
+                }
+
+                if (newTab[i][ligne] == null) {
+                    newTab[i][ligne] = "YELLOW"
+                }
+
+                var eval = this.minimax(newTab, depth-1, "RED");
+                maxEval = maxEval > eval ? maxEval : eval;
+                
+            }
+
+            return maxEval
+        } else {
+            var minEval = Number.POSITIVE_INFINITY
+            for (let i = 0; i < tab.length; i++) {
+                var newTab = this.copyArray(tab)
+
+                var ligne = 0
+                while (newTab[i][ligne + 1] == null && ligne < 5) {
+                    ligne++;
+                }
+
+                if (newTab[i][ligne] == null) {
+                    newTab[i][ligne] = "RED"
+                }
+
+                var eval = this.minimax(newTab, depth-1, "YELLOW");
+                minEval = maxEval < eval ? maxEval : eval;
+                
+            }
+
+            return minEval
+        }
+    }
+
+    evaluation(tab, player) {
+        var value = Math.max(this.check_colonnes(player, tab), this.check_lignes(player, tab), this.check_diags(player, tab))
+        return player == "YELLOW" ? value : -value;
+    }
+
+    copyArray(array) {
+        var newTab = new Array(this.largeur)
+
+        for (let i = 0; i < array.length; i++) {
+            newTab[i] = array[i].slice()            
+        }
+
+        return newTab
     }
 
 }

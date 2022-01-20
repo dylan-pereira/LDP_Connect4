@@ -230,7 +230,7 @@ createGameBoard(){
     this.createModal();
 }
 
-bindAddToken(callback){
-    //callback(test);
+bindAddToken(handler){
+    //handler(parametre)
 }
 }
