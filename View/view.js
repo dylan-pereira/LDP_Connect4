@@ -39,7 +39,6 @@ createSideMenu(){
 }
 
 createHeader(){
-    console.log("TEST2");
     for(let i = 0; i<7; i++){
         let button = document.createElement("div");
         button.id="button"+i;
@@ -62,6 +61,9 @@ createHeader(){
     
     function onButtonClick(evt){
         // Il faut récupérer la ligne grace au addtoken() du model 
+
+
+
         evt.currentTarget.realThis.addToken(this.id.slice(this.id.length - 1),4);
     }
 
@@ -230,7 +232,7 @@ createGameBoard(){
     this.createModal();
 }
 
-bindAddToken(handler){
-    //handler(parametre)
+bindAddToken(callback){
+    this.addToken = callback;
 }
 }

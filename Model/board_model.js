@@ -40,7 +40,6 @@ class Grille {
     }
 
     is_winner(jeton, tab) {
-        console.log("is_winner test")
         if(this.check_colonnes(jeton, tab) == 4 || this.check_lignes(jeton, tab) == 4 || this.check_diags(jeton, tab) == 4){
             console.log("ca marche tu as gagné !!!")
         }
@@ -177,7 +176,7 @@ class Grille {
         for (var colonne = 0; colonne < this.largeur; colonne++) {
             let tab = tableau
             this.add_to_column(tab, colonne)
-            if (this.minimax(tab) > best_eval) {
+            if (this.minimax(tab, this.get_minimax_depth()-1, "YELLOW") > best_eval) {
                 this.tableau = tab
             }
         }
