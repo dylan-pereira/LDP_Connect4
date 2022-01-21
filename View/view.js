@@ -46,7 +46,9 @@ createHeader(){
         button.style.width=(this.tokenRadius-5)*2+"px";
         button.style.height=(this.tokenRadius-5)*2+"px";
     
-        button.addEventListener("click", onButtonClick);
+        button.addEventListener("click", () => {
+            this.getTokenPlayed(i);
+        });
         button.realThis=this;
 
         button.addEventListener("mouseenter", function(event){
@@ -60,15 +62,19 @@ createHeader(){
         
     }
     
-    function onButtonClick(evt){
-        // Il faut récupérer la ligne grace au addtoken() du model 
-        evt.currentTarget.realThis.addToken(this.id.slice(this.id.length - 1),4);
-    }
+    // function onButtonClick(evt){
+    //     // Il faut récupérer la ligne grace au addtoken() du model 
+    //     evt.currentTarget.realThis.addToken(this.id.slice(this.id.length - 1),4);
+    // }
 
     
 }
 
-addToken(column, row = 0){
+
+
+addToken(column, row = 0, playerColor){
+    console.log(column) // 0 
+    console.log(row) // 5
     if(this.buttonEnabled){
         this.buttonEnabled = false;
         var canvas = document.getElementById('tokens');
@@ -80,7 +86,7 @@ addToken(column, row = 0){
             vx: 0,
             vy: 2,
             radius: this.tokenRadius,
-            color: this.playerColor,
+            color: playerColor,
             draw: function() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2, true);
@@ -230,7 +236,16 @@ createGameBoard(){
     this.createModal();
 }
 
+win(player){
+    if(player=="red"){
+        alert("Le joueurs 1 a gagné")
+    } else {
+        alert("Le joueur 2 a gagné")
+    }
+    this.resetGrid()
+}
+
 bindAddToken(handler){
-    //handler(parametre)
+    this.getTokenPlayed = handler
 }
 }

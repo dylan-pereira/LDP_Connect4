@@ -3,6 +3,8 @@ class Controller {
         this.view = view; 
         this.model = model; 
         this.view.bindAddToken(this.handleAddToken)
+        this.model.bindOnGridChanged(this.onGridChanged)
+        this.model.bindOnWinning(this.onWinning)
     }
 
     intiGame(){
@@ -10,10 +12,22 @@ class Controller {
         this.grille = new Grille()
     }
 
-    handleAddToken(id) {
-        colonne = parseInt(id.slice(-1),10);
-        this.model.addToken(colonne); 
-    } //buttoni
+    onGridChanged = (column, row, color) => {
+        this.view.addToken(column, row, color)
+      }
+
+    onWinning = (player) => {
+        this.view.win(player)
+    }
+
+    handleAddToken = (column) => {
+        this.model.addToken(column)
+    }
+
+    // handleAddToken(id) {
+    //     colonne = parseInt(id.slice(-1),10);
+    //     this.model.addToken(colonne); 
+    // } //buttoni
 
 }
 
