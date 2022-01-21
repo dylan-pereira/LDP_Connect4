@@ -7,6 +7,7 @@ class Grille {
         this.hauteur = 6
         this.tableau = new Array(this.largeur);
         this.activeIA = false
+        this.lastRowAdded = null; 
 
         for (var colonne = 0; colonne < this.largeur; colonne++) {
             var current_colonne = new Array(this.hauteur);
@@ -18,9 +19,9 @@ class Grille {
     }
 
     addToken(colonne) {
-        let token = "RED"
-        if (activePlayer) token = "RED";
-        else token = "YELLOW";
+        let token = "red"
+        if (activePlayer) token = "red";
+        else token = "yellow";
 
         activePlayer = !activePlayer
 
@@ -36,48 +37,89 @@ class Grille {
             console.log("Y a plus de place marcel");
         }
 
+        this.onGridChanged(colonne, this.getLigne(ligne), token)
+
         return ligne;
     }
 
+    getLigne(ligne){
+        switch (ligne) {
+            case 5:
+                return 0
+
+            case 4:
+                return 1
+
+            case 3:
+                return 2
+
+            case 2:
+                return 3
+
+            case 1:
+                return 4
+
+            case 0:
+                return 5
+
+            default:
+                return 0;
+        }
+    }
+
     is_winner(jeton, tab) {
+        console.log("is_winner test")
+        console.log("check" + this.check_colonnes(jeton, tab))
         if(this.check_colonnes(jeton, tab) == 4 || this.check_lignes(jeton, tab) == 4 || this.check_diags(jeton, tab) == 4){
-            console.log("ca marche tu as gagné !!!")
+            this.onWinning(jeton); 
         }
     }
 
     check_colonnes(jeton, tab ){
+        var value = 0
         for(let colonne = 0; colonne < this.largeur; colonne++){
-            for (let ligne = 0; ligne < this.hauteur-3; ligne++) {
-
-                let value = 0
-                while(value < 4 && tab[colonne][ligne+(value++)] == jeton)
-                return value
+            for (let ligne = 0; ligne < this.hauteur; ligne++) {
+                var newVal = 0
+                while(newVal != 4 && tab[colonne][ligne+(newVal)] == jeton){
+                    newVal++
+                }
+                if(newVal == 4){
+                    return newVal
+                } else {
+                    value = newVal > value ? newVal : value
+                }
             }
         }
-        return false
+        return value
     }
 
     check_lignes(jeton, tab){
+        var value = 0
         for(let ligne = 0; ligne < this.hauteur; ligne++){
             for(let colonne = 0; colonne < this.largeur-3; colonne++){
-
-                let value = 0
-                while(value < 4 && tab[colonne+(value++)][ligne] == jeton)
-                return value
-
+                var newVal = 0
+                while(newVal != 4 && tab[colonne+newVal][ligne] == jeton){
+                    newVal++
+                }
+                if(newVal == 4){
+                    return newVal
+                } else {
+                    value = newVal > value ? newVal : value
+                }
+    
             }
         }
-        return false
+        return value
     }
 
     check_diags(jeton, tab) {
+        var max = 0
         for (let ligne = 0; ligne < this.hauteur; ligne++) {
             for (let colonne = 0; colonne < this.largeur; colonne++) {
-                return Math.max(this.checkDiagRight(colonne, ligne, jeton, 0, tab), this.checkDiagLeft(colonne, ligne, jeton, 0, tab))
+                max =  Math.max(this.checkDiagRight(colonne, ligne, jeton, 0, tab), this.checkDiagLeft(colonne, ligne, jeton, 0, tab), max)
             }
         }
-
-        return false;
+        return max
     }
 
     checkDiagRight(c, l, color, val, tab) {
@@ -112,7 +154,7 @@ class Grille {
             return this.evaluation(tab, player);
         }
 
-        if(player == "YELLOW"){
+        if(player == "yellow"){
             var maxEval = Number.NEGATIVE_INFINITY
             for (let i = 0; i < tab.length; i++) {
                 var newTab = this.copyArray(tab)
@@ -123,10 +165,11 @@ class Grille {
                 }
 
                 if (newTab[i][ligne] == null) {
-                    newTab[i][ligne] = "YELLOW"
+                    newTab[i][ligne] = "yellow"
                 }
 
-                var evaluation = this.minimax(newTab, depth-1, "RED");
+                var evaluation = this.minimax(newTab, depth-1, "red");
+
                 maxEval = maxEval > evaluation ? maxEval : evaluation;
                 
             }
@@ -143,10 +186,12 @@ class Grille {
                 }
 
                 if (newTab[i][ligne] == null) {
-                    newTab[i][ligne] = "RED"
+                    newTab[i][ligne] = "red"
                 }
 
-                var evaluation = this.minimax(newTab, depth-1, "YELLOW");
+
+                var evaluation = this.minimax(newTab, depth-1, "yellow");
+
                 minEval = maxEval < evaluation ? maxEval : evaluation;
                 
             }
@@ -157,7 +202,7 @@ class Grille {
 
     evaluation(tab, player) {
         var value = Math.max(this.check_colonnes(player, tab), this.check_lignes(player, tab), this.check_diags(player, tab))
-        return player == "YELLOW" ? value : -value;
+        return player == "yellow" ? value : -value;
     }
 
     copyArray(array) {
@@ -168,6 +213,24 @@ class Grille {
         }
 
         return newTab
+    }
+
+    getLastRowAdded(){
+        let row = this.getLastRowAdded
+        this.getLastRowAdded = null
+        return row
+    }
+
+    setLastRowAdded(row) {
+        this.lastRowAdded = row
+    }
+
+    bindOnGridChanged(callback) {
+        this.onGridChanged = callback
+    }
+
+    bindOnWinning(callback){
+        this.onWinning = callback
     }
 
     play_minimax() {
