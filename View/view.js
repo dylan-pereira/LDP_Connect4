@@ -39,7 +39,6 @@ createSideMenu(){
 }
 
 createHeader(){
-    console.log("TEST2");
     for(let i = 0; i<7; i++){
         let button = document.createElement("div");
         button.id="button"+i;
@@ -61,12 +60,10 @@ createHeader(){
         document.getElementById("gameboard_buttons").appendChild(button);
         
     }
-    
     // function onButtonClick(evt){
     //     // Il faut récupérer la ligne grace au addtoken() du model 
     //     evt.currentTarget.realThis.addToken(this.id.slice(this.id.length - 1),4);
     // }
-
     
 }
 
