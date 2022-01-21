@@ -7,6 +7,7 @@ class View {
         this.buttonEnabled = true;
         this.grid_width = 7*(this.tokenRadius+this.spaceBetween)*2;
         this.grid_height = 6*(this.tokenRadius+this.spaceBetween)*2;
+        this.pause = false
 
         this.createSideMenu();
         this.createGameBoard();
@@ -22,16 +23,23 @@ createSideMenu(){
     }
     });
 
-    document.getElementById("restartButton").addEventListener('click', function() {
-        console.log("TODO: Implement reset tab stocké en back");
-        this.resetGrid();
+    document.getElementById("restartButton").addEventListener('click', () => {
+
+        if(document.querySelector('input[name="startplayer"]:checked').value == "Player1"){
+            this.playerColor = "red"
+        } else {
+            this.playerColor = "yellow"
+        }
+
+        this.resetGrid()
+        this.resetGridModel()
     });
 
     
 
     console.log(document.querySelectorAll("input[name='startplayer']"))
     document.querySelectorAll("input[name='startplayer']").forEach(element => element.addEventListener('click', function() {
-        console.log("TODO: Implement choice : " + this.value);
+        
     }));
     
 
@@ -46,7 +54,12 @@ createHeader(){
         button.style.height=(this.tokenRadius-5)*2+"px";
     
         button.addEventListener("click", () => {
-            this.getTokenPlayed(i);
+            console.log(this.pause)
+            if(!this.pause){
+                this.getTokenPlayed(i)
+                this.pause = true
+                setTimeout(()=>{this.pause = false;console.log("done")},3200);
+            } 
         });
         button.realThis=this;
 
@@ -67,11 +80,7 @@ createHeader(){
     
 }
 
-
-
 addToken(column, row = 0, playerColor){
-    console.log(column) // 0 
-    console.log(row) // 5
     if(this.buttonEnabled){
         this.buttonEnabled = false;
         var canvas = document.getElementById('tokens');
@@ -185,11 +194,11 @@ createGrid(){
 resetGrid(){
     document.getElementById("tokens").remove();
     document.getElementById("grid").remove();
-    createGrid();
+    //this.createGrid();
+    this.createGameBoard()
 }
 
 createModal(){
-    console.log("TEST")
     let mymodal = document.createElement("div");
     mymodal.setAttribute("class", "modal");
     mymodal.id="myModal";
@@ -234,15 +243,24 @@ createGameBoard(){
 }
 
 win(player){
-    if(player=="red"){
-        alert("Le joueurs 1 (rouge) a gagné")
-    } else {
-        alert("Le joueur 2 (jaune) a gagné")
-    }
-    this.resetGrid()
+    setTimeout(()=>{
+        if(player=="red"){
+            alert("Le joueurs 1 (rouge) a gagné");
+        } else {
+            alert("Le joueur 2 (jaune) a gagné");
+        }
+        this.resetGrid();
+        this.resetGridModel();
+    },3200);
+    
+    
 }
 
 bindAddToken(handler){
     this.getTokenPlayed = handler
+}
+
+bindResetGrid(handler){
+    this.resetGridModel = handler
 }
 }

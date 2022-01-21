@@ -3,13 +3,9 @@ class Controller {
         this.view = view; 
         this.model = model; 
         this.view.bindAddToken(this.handleAddToken)
+        this.view.bindResetGrid(this.handleResetGrid)
         this.model.bindOnGridChanged(this.onGridChanged)
         this.model.bindOnWinning(this.onWinning)
-    }
-
-    intiGame(){
-        this.view.createGameBoard(); 
-        this.grille = new Grille()
     }
 
     onGridChanged = (column, row, color) => {
@@ -22,6 +18,12 @@ class Controller {
 
     handleAddToken = (column) => {
         this.model.addToken(column)
+    }
+
+    handleResetGrid = () => {
+        this.model = new Grille();
+        this.model.bindOnGridChanged(this.onGridChanged)
+        this.model.bindOnWinning(this.onWinning)
     }
 
     // handleAddToken(id) {

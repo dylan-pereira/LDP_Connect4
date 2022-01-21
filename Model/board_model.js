@@ -70,7 +70,10 @@ class Grille {
     is_winner(jeton, tab) {
         if(this.check_colonnes(jeton, tab) == 4 || this.check_lignes(jeton, tab) == 4 || this.check_diags(jeton, tab) == 4){
             this.onWinning(jeton); 
+            //return true
+            //console.log("Le bougre a gagné")
         }
+        //return false
     }
 
     check_colonnes(jeton, tab ){
@@ -148,13 +151,15 @@ class Grille {
     }
 
     minimax(tab, depth, player){
-        if(depth == 0 || this.is_winner(player, tab)){
+        console.log(depth)
+        if(depth <= 0 || this.is_winner(player, tab)){
             return this.evaluation(tab, player);
         }
 
         if(player == "yellow"){
             var maxEval = Number.NEGATIVE_INFINITY
             for (let i = 0; i < tab.length; i++) {
+                console.log("check yellow")
                 var newTab = this.copyArray(tab)
 
                 var ligne = 0
@@ -176,6 +181,7 @@ class Grille {
         } else {
             var minEval = Number.POSITIVE_INFINITY
             for (let i = 0; i < tab.length; i++) {
+                console.log("check red")
                 var newTab = this.copyArray(tab)
 
                 var ligne = 0
@@ -237,7 +243,7 @@ class Grille {
         for (var colonne = 0; colonne < this.largeur; colonne++) {
             let tab = tableau
             this.add_to_column(tab, colonne)
-            if (this.minimax(tab, this.get_minimax_depth()-1, "YELLOW") > best_eval) {
+            if (this.minimax(tab, this.get_minimax_depth()-1, "yellow") > best_eval) {
                 this.tableau = tab
             }
         }
@@ -252,7 +258,7 @@ class Grille {
                 }
             }
         }
-        console.log(depth)
+        return depth
     }
 
     add_to_column(tab, colonne) {
