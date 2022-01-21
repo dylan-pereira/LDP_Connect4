@@ -238,9 +238,9 @@ createGameBoard(){
 
 win(player){
     if(player=="red"){
-        alert("Le joueurs 1 a gagné")
+        alert("Le joueurs 1 (rouge) a gagné")
     } else {
-        alert("Le joueur 2 a gagné")
+        alert("Le joueur 2 (jaune) a gagné")
     }
     this.resetGrid()
 }

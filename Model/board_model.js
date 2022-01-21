@@ -231,6 +231,7 @@ class Grille {
 
     bindOnWinning(callback){
         this.onWinning = callback
+    }
 
     play_minimax() {
         let tableau = this.tableau
