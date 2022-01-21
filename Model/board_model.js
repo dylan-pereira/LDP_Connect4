@@ -169,6 +169,7 @@ class Grille {
                 }
 
                 var evaluation = this.minimax(newTab, depth-1, "red");
+
                 maxEval = maxEval > evaluation ? maxEval : evaluation;
                 
             }
@@ -188,7 +189,9 @@ class Grille {
                     newTab[i][ligne] = "red"
                 }
 
+
                 var evaluation = this.minimax(newTab, depth-1, "yellow");
+
                 minEval = maxEval < evaluation ? maxEval : evaluation;
                 
             }
@@ -228,6 +231,38 @@ class Grille {
 
     bindOnWinning(callback){
         this.onWinning = callback
+
+    play_minimax() {
+        let tableau = this.tableau
+        let best_eval = 0
+        for (var colonne = 0; colonne < this.largeur; colonne++) {
+            let tab = tableau
+            this.add_to_column(tab, colonne)
+            if (this.minimax(tab) > best_eval) {
+                this.tableau = tab
+            }
+        }
+    }
+
+    get_minimax_depth() {
+        let depth = 0
+        for (var colonne = 0; colonne < this.largeur; colonne++) {
+            for (var ligne = 0; ligne < this.hauteur; ligne++) {
+                if (this.tableau[colonne][ligne] == null) {
+                    depth ++
+                }
+            }
+        }
+        console.log(depth)
+    }
+
+    add_to_column(tab, colonne) {
+        var ligne = 0
+        while (tab[colonne][ligne + 1] == null && ligne < 5) {
+            ligne++
+        }
+        tab[colonne][ligne]
+        return tab
     }
 
 }
