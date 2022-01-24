@@ -39,7 +39,7 @@ class Grille {
 
         this.onGridChanged(colonne, this.getLigne(ligne), token)
         if(IA){
-            setTimeout(()=>{this.addToken(this.play_minimax(token == "yellow" ? "red" : "yellow"), false);},3200);
+            this.addToken(this.play_minimax(token == "yellow" ? "red" : "yellow"), false )
         }
         return ligne;
     }
@@ -197,7 +197,7 @@ class Grille {
 
                 var evaluation = this.minimax(newTab, depth-1, "yellow");
 
-                minEval = minEval < evaluation ? minEval : evaluation;
+                minEval = maxEval < evaluation ? maxEval : evaluation;
                 
             }
 
