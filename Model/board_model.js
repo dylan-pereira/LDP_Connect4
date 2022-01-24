@@ -18,7 +18,7 @@ class Grille {
         }
     }
 
-    addToken(colonne) {
+    addToken(colonne, IA) {
         let token = "red"
         if (activePlayer) token = "red";
         else token = "yellow";
@@ -38,7 +38,9 @@ class Grille {
         }
 
         this.onGridChanged(colonne, this.getLigne(ligne), token)
-
+        if(IA){
+            setTimeout(()=>{this.addToken(this.play_minimax(token == "yellow" ? "red" : "yellow"), false);},3200);
+        }
         return ligne;
     }
 
@@ -195,7 +197,7 @@ class Grille {
 
                 var evaluation = this.minimax(newTab, depth-1, "yellow");
 
-                minEval = maxEval < evaluation ? maxEval : evaluation;
+                minEval = minEval < evaluation ? minEval : evaluation;
                 
             }
 
@@ -240,6 +242,7 @@ class Grille {
     play_minimax(player) {
         let store_tab = this.copyArray(this.tableau)
         let best_eval = 0
+        let colonne_played;
         for (var colonne = 0; colonne < this.largeur; colonne++) {
             let tab = this.copyArray(store_tab)
             this.add_to_column(tab, colonne, player)
@@ -247,9 +250,10 @@ class Grille {
             console.log(minimax_eval)
             if (minimax_eval > best_eval) {
                 best_eval = minimax_eval
-                this.tableau = tab
+                colonne_played = colonne
             }
         }
+        return colonne_played
     }
 
     get_minimax_depth() {

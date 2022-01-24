@@ -8,6 +8,7 @@ class View {
         this.grid_width = 7*(this.tokenRadius+this.spaceBetween)*2;
         this.grid_height = 6*(this.tokenRadius+this.spaceBetween)*2;
         this.pause = false
+        this.IAChecked = true; 
 
         this.createSideMenu();
         this.createGameBoard();
@@ -17,9 +18,9 @@ createSideMenu(){
 
     document.querySelector("input[name=activeIA]").addEventListener('change', function() {
     if (this.checked) {
-        console.log("TODO:Enable IA");
+        this.IAChecked = true; 
     } else {
-        console.log("TODO:Disable IA");
+        this.IAChecked = false; 
     }
     });
 
@@ -54,11 +55,10 @@ createHeader(){
         button.style.height=(this.tokenRadius-5)*2+"px";
     
         button.addEventListener("click", () => {
-            console.log(this.pause)
             if(!this.pause){
-                this.getTokenPlayed(i)
+                this.getTokenPlayed(i, this.IAChecked)
                 this.pause = true
-                setTimeout(()=>{this.pause = false;console.log("done")},3200);
+                setTimeout(()=>{this.pause = false;},3200);
             } 
         });
         button.realThis=this;
@@ -146,7 +146,6 @@ addToken(column, row = 0, playerColor){
 }
 
 createGrid(){
-    console.log("TEST");
     let tokens = document.createElement("canvas");
     tokens.id="tokens";
     tokens.width=this.grid_width;

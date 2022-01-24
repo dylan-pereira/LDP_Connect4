@@ -16,8 +16,8 @@ class Controller {
         this.view.win(player)
     }
 
-    handleAddToken = (column) => {
-        this.model.addToken(column)
+    handleAddToken = (column, IA) => {
+        this.model.addToken(column, IA)
     }
 
     handleResetGrid = () => {
@@ -25,11 +25,6 @@ class Controller {
         this.model.bindOnGridChanged(this.onGridChanged)
         this.model.bindOnWinning(this.onWinning)
     }
-
-    // handleAddToken(id) {
-    //     colonne = parseInt(id.slice(-1),10);
-    //     this.model.addToken(colonne); 
-    // } //buttoni
 
 }
 
