@@ -67,10 +67,14 @@ class Grille {
         }
     }
 
-    is_winner(jeton, tab) {
+    is_winner(jeton, tab, minimax) {
         if(this.check_colonnes(jeton, tab) == 4 || this.check_lignes(jeton, tab) == 4 || this.check_diags(jeton, tab) == 4){
-            this.onWinning(jeton); 
+            if(!minimax){
+                this.onWinning(jeton);  
+            }
+            return true;
         }
+        return false; 
     }
 
     check_colonnes(jeton, tab ){
@@ -202,6 +206,7 @@ class Grille {
     }
 
     evaluation(tab, player) {
+        console.log("TEST EVAL");
         var value = Math.max(this.check_colonnes(player, tab), this.check_lignes(player, tab), this.check_diags(player, tab))
         return player == "yellow" ? value : -value;
     }
