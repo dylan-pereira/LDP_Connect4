@@ -234,13 +234,13 @@ class Grille {
         this.onWinning = callback
     }
 
-    play_minimax() {
+    play_minimax(player) {
         let tableau = this.tableau
         let best_eval = 0
         for (var colonne = 0; colonne < this.largeur; colonne++) {
             let tab = tableau
-            this.add_to_column(tab, colonne)
-            if (this.minimax(tab, this.get_minimax_depth()-1, "yellow") > best_eval) {
+            this.add_to_column(tab, colonne, player)
+            if (this.minimax(tab, 4, player) > best_eval) {
                 this.tableau = tab
             }
         }
@@ -258,12 +258,12 @@ class Grille {
         return depth
     }
 
-    add_to_column(tab, colonne) {
+    add_to_column(tab, colonne, player) {
         var ligne = 0
         while (tab[colonne][ligne + 1] == null && ligne < 5) {
             ligne++
         }
-        tab[colonne][ligne]
+        tab[colonne][ligne] = player
         return tab
     }
 
