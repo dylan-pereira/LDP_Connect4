@@ -153,14 +153,13 @@ class Grille {
 
     minimax(tab, depth, player){
         console.log(depth)
-        if(depth <= 0 || this.is_winner(player, tab)){
+        if(depth <= 0 || this.is_winner(player, tab, true)){
             return this.evaluation(tab, player);
         }
 
         if(player == "yellow"){
             var maxEval = Number.NEGATIVE_INFINITY
             for (let i = 0; i < tab.length; i++) {
-                console.log("check yellow")
                 var newTab = this.copyArray(tab)
 
                 var ligne = 0
@@ -182,7 +181,6 @@ class Grille {
         } else {
             var minEval = Number.POSITIVE_INFINITY
             for (let i = 0; i < tab.length; i++) {
-                console.log("check red")
                 var newTab = this.copyArray(tab)
 
                 var ligne = 0
@@ -240,12 +238,15 @@ class Grille {
     }
 
     play_minimax(player) {
-        let tableau = this.tableau
+        let store_tab = this.copyArray(this.tableau)
         let best_eval = 0
         for (var colonne = 0; colonne < this.largeur; colonne++) {
-            let tab = tableau
+            let tab = this.copyArray(store_tab)
             this.add_to_column(tab, colonne, player)
-            if (this.minimax(tab, 4, player) > best_eval) {
+            let minimax_eval = this.minimax(tab, 4, player)
+            console.log(minimax_eval)
+            if (minimax_eval > best_eval) {
+                best_eval = minimax_eval
                 this.tableau = tab
             }
         }
