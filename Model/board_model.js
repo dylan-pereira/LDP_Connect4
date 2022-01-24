@@ -70,10 +70,7 @@ class Grille {
     is_winner(jeton, tab) {
         if(this.check_colonnes(jeton, tab) == 4 || this.check_lignes(jeton, tab) == 4 || this.check_diags(jeton, tab) == 4){
             this.onWinning(jeton); 
-            //return true
-            //console.log("Le bougre a gagné")
         }
-        //return false
     }
 
     check_colonnes(jeton, tab ){

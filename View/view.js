@@ -194,8 +194,7 @@ createGrid(){
 resetGrid(){
     document.getElementById("tokens").remove();
     document.getElementById("grid").remove();
-    //this.createGrid();
-    this.createGameBoard()
+    this.createGrid();
 }
 
 createModal(){
@@ -245,6 +244,7 @@ createGameBoard(){
 win(player){
     setTimeout(()=>{
         if(player=="red"){
+            this.
             alert("Le joueurs 1 (rouge) a gagné");
         } else {
             alert("Le joueur 2 (jaune) a gagné");
