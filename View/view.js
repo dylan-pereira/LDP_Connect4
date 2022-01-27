@@ -135,7 +135,6 @@ addToken(column, row = 0, playerColor){
 
         raf = window.requestAnimationFrame(draw);
         ball.draw();
-        console.log("bonjour");
     }
 }
 
