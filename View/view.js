@@ -22,14 +22,14 @@ createSideMenu(){
 
     document.getElementById("restartButton").addEventListener('click', () => {
 
-        if(document.querySelector('input[name="startplayer"]:checked').value == "Player1"){
+        if(document.querySelector('input[name="startplayer"]:checked').value == "player1"){
             this.playerColor = "red"
         } else {
             this.playerColor = "yellow"
         }
 
         this.resetGrid()
-        this.resetGridModel()
+        this.resetGridModel(this.playerColor)
 
         if(document.querySelector("input[name=activeIA]").checked){
             this.enableIA(true)
@@ -60,7 +60,7 @@ createHeader(){
         button.realThis=this;
 
         button.addEventListener("mouseenter", function(event){
-            event.target.style.backgroundColor = this.playerColor;
+            event.target.style.backgroundColor = button.realThis.playerColor;
         });
         button.addEventListener("mouseout", function(event){
             event.target.style.backgroundColor = "";
@@ -256,6 +256,10 @@ bindUnlockModel(handler){
 
 bindEnableIA(handler){
     this.enableIA = handler
+}
+
+setPlayerColor(playerColor){
+    this.playerColor = playerColor
 }
 
 }

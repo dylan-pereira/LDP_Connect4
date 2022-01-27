@@ -8,6 +8,7 @@ class Controller {
         this.view.bindEnableIA(this.handleEnableIA)
         this.model.bindOnGridChanged(this.onGridChanged)
         this.model.bindOnWinning(this.onWinning)
+        this.model.bindChangePlayerColor(this.onChangePlayerColor)
     }
 
     onGridChanged = (column, row, color) => {
@@ -18,15 +19,21 @@ class Controller {
         this.view.win(player)
     }
 
+    onChangePlayerColor = (playerColor) => {
+        this.view.setPlayerColor(playerColor)
+    }
+
     handleAddToken = (column) => {
         this.model.addToken(column)
         this.model.setIATurn(true)
     }
 
-    handleResetGrid = () => {
+    handleResetGrid = (playerColor) => {
         this.model = new Grille();
         this.model.bindOnGridChanged(this.onGridChanged)
         this.model.bindOnWinning(this.onWinning)
+        this.model.bindChangePlayerColor(this.onChangePlayerColor)
+        this.model.setPlayerColor(playerColor)
     }
 
     handleUnlockModel = () => {

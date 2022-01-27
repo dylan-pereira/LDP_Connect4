@@ -1,4 +1,4 @@
-let activePlayer = true
+//let activePlayer = true
 
 class Grille {
     
@@ -9,6 +9,7 @@ class Grille {
         this.lastRowAdded = null; 
         this.pauseModel = false; 
         this.IATurn = true; 
+        this.activePlayer = true; 
 
         for (var colonne = 0; colonne < this.largeur; colonne++) {
             var current_colonne = new Array(this.hauteur);
@@ -24,10 +25,12 @@ class Grille {
         if(!this.pauseModel){
 
             let token = "red"
-            if (activePlayer) token = "red";
+            if (this.activePlayer) token = "red";
             else token = "yellow";
 
-            activePlayer = !activePlayer
+            this.activePlayer = !this.activePlayer
+
+            this.changeViewPlayerColor(token == "yellow" ? "red" : "yellow")
 
             var ligne = 0
             while (this.tableau[colonne][ligne + 1] == null && ligne < 5) {
@@ -244,15 +247,19 @@ class Grille {
         this.onWinning = callback
     }
 
+    bindChangePlayerColor(callback) {
+        this.changeViewPlayerColor = callback
+    }
+
     unlockModel(){
         this.pauseModel = false; 
-        this.is_winner(activePlayer == true ? "yellow" : "red", this.tableau, false);
+        this.is_winner(this.activePlayer == true ? "yellow" : "red", this.tableau, false);
         if(this.activeIA && this.IATurn){
 
             //let minMaxRes = this.play_minimax(activePlayer == "yellow" ? "red" : "yellow")
 
             const secondPart = async () => {
-                const minMaxRes = await this.play_minimax(activePlayer == "yellow" ? "red" : "yellow");
+                const minMaxRes = await this.play_minimax(this.activePlayer == "yellow" ? "red" : "yellow");
                 console.log("resMinMax : "+minMaxRes)
                 this.addToken(minMaxRes, false)
                 this.setIATurn(false) 
@@ -307,6 +314,14 @@ class Grille {
 
     setIATurn(IATurn){
         this.IATurn = IATurn
+    }
+
+    setPlayerColor(color){
+        if(color == "red"){
+            this.activePlayer = true; 
+        } else {
+            this.activePlayer = false;
+        }
     }
 
 }
