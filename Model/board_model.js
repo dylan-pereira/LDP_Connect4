@@ -202,7 +202,7 @@ class Grille {
 
                 var evaluation = this.minimax(newTab, depth-1, "yellow");
 
-                minEval = minEval < evaluation ? minEval : evaluation;
+                minEval = maxEval < evaluation ? maxEval : evaluation;
                 
             }
 
