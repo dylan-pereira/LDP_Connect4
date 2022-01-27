@@ -6,8 +6,9 @@ class Grille {
         this.largeur = 7
         this.hauteur = 6
         this.tableau = new Array(this.largeur);
-        this.activeIA = false
         this.lastRowAdded = null; 
+        this.pauseModel = false; 
+        this.IATurn = true; 
 
         for (var colonne = 0; colonne < this.largeur; colonne++) {
             var current_colonne = new Array(this.hauteur);
@@ -18,30 +19,34 @@ class Grille {
         }
     }
 
-    addToken(colonne, IA) {
-        let token = "red"
-        if (activePlayer) token = "red";
-        else token = "yellow";
+    addToken(colonne) {
 
-        activePlayer = !activePlayer
+        if(!this.pauseModel){
 
-        var ligne = 0
-        while (this.tableau[colonne][ligne + 1] == null && ligne < 5) {
-            ligne++;
+            let token = "red"
+            if (activePlayer) token = "red";
+            else token = "yellow";
+
+            activePlayer = !activePlayer
+
+            var ligne = 0
+            while (this.tableau[colonne][ligne + 1] == null && ligne < 5) {
+                ligne++;
+            }
+
+            if (this.tableau[colonne][ligne] == null) {
+                this.tableau[colonne][ligne] = token
+                //this.is_winner(token, this.tableau)
+            } else {
+                console.log("Y a plus de place marcel");
+            }
+
+            this.onGridChanged(colonne, this.getLigne(ligne), token)
+
+            this.pauseModel = true; 
+
         }
 
-        if (this.tableau[colonne][ligne] == null) {
-            this.tableau[colonne][ligne] = token
-            this.is_winner(token, this.tableau)
-        } else {
-            console.log("Y a plus de place marcel");
-        }
-
-        this.onGridChanged(colonne, this.getLigne(ligne), token)
-        if(IA){
-            setTimeout(()=>{this.addToken(this.play_minimax(token == "yellow" ? "red" : "yellow"), false);},3200);
-        }
-        return ligne;
     }
 
     getLigne(ligne){
@@ -239,6 +244,29 @@ class Grille {
         this.onWinning = callback
     }
 
+    unlockModel(){
+        this.pauseModel = false; 
+        this.is_winner(activePlayer == true ? "yellow" : "red", this.tableau, false);
+        if(this.activeIA && this.IATurn){
+
+            //let minMaxRes = this.play_minimax(activePlayer == "yellow" ? "red" : "yellow")
+
+            const secondPart = async () => {
+                const minMaxRes = await this.play_minimax(activePlayer == "yellow" ? "red" : "yellow");
+                console.log("resMinMax : "+minMaxRes)
+                this.addToken(minMaxRes, false)
+                this.setIATurn(false) 
+            }
+
+            secondPart()
+
+        }
+    }
+
+    enableIA(enable){
+        this.activeIA = enable; 
+    }
+
     play_minimax(player) {
         let store_tab = this.copyArray(this.tableau)
         let best_eval = 0
@@ -275,6 +303,10 @@ class Grille {
         }
         tab[colonne][ligne] = player
         return tab
+    }
+
+    setIATurn(IATurn){
+        this.IATurn = IATurn
     }
 
 }

@@ -8,20 +8,16 @@ class View {
         this.grid_width = 7*(this.tokenRadius+this.spaceBetween)*2;
         this.grid_height = 6*(this.tokenRadius+this.spaceBetween)*2;
         this.pause = false
-        this.IAChecked = true; 
 
         this.createSideMenu();
         this.createGameBoard();
     }
 
+
 createSideMenu(){
 
-    document.querySelector("input[name=activeIA]").addEventListener('change', function() {
-    if (this.checked) {
-        this.IAChecked = true; 
-    } else {
-        this.IAChecked = false; 
-    }
+    document.querySelector("input[name=activeIA]").addEventListener('click', () => {
+        
     });
 
     document.getElementById("restartButton").addEventListener('click', () => {
@@ -34,9 +30,13 @@ createSideMenu(){
 
         this.resetGrid()
         this.resetGridModel()
-    });
 
-    
+        if(document.querySelector("input[name=activeIA]").checked){
+            this.enableIA(true)
+        } else {
+            this.enableIA(false)
+        }
+    });
 
     console.log(document.querySelectorAll("input[name='startplayer']"))
     document.querySelectorAll("input[name='startplayer']").forEach(element => element.addEventListener('click', function() {
@@ -55,11 +55,7 @@ createHeader(){
         button.style.height=(this.tokenRadius-5)*2+"px";
     
         button.addEventListener("click", () => {
-            if(!this.pause){
-                this.getTokenPlayed(i, this.IAChecked)
-                this.pause = true
-                setTimeout(()=>{this.pause = false;},3200);
-            } 
+            this.getTokenPlayed(i)
         });
         button.realThis=this;
 
@@ -73,10 +69,6 @@ createHeader(){
         document.getElementById("gameboard_buttons").appendChild(button);
         
     }
-    // function onButtonClick(evt){
-    //     // Il faut récupérer la ligne grace au addtoken() du model 
-    //     evt.currentTarget.realThis.addToken(this.id.slice(this.id.length - 1),4);
-    // }
     
 }
 
@@ -136,12 +128,14 @@ addToken(column, row = 0, playerColor){
                 ctx.closePath();
 
                 realthis.buttonEnabled = true;
+                realthis.unlockModel()
             }
         }
 
 
         raf = window.requestAnimationFrame(draw);
         ball.draw();
+        console.log("bonjour");
     }
 }
 
@@ -241,18 +235,15 @@ createGameBoard(){
 }
 
 win(player){
-    setTimeout(()=>{
-        if(player=="red"){
-            this.
-            alert("Le joueurs 1 (rouge) a gagné");
-        } else {
-            alert("Le joueur 2 (jaune) a gagné");
-        }
-        this.resetGrid();
-        this.resetGridModel();
-    },3200);
-    
-    
+
+    if(player=="red"){
+        alert("Le joueurs 1 (rouge) a gagné");
+    } else {
+        alert("Le joueur 2 (jaune) a gagné");
+    }
+    this.resetGrid();
+    this.resetGridModel();
+
 }
 
 bindAddToken(handler){
@@ -262,4 +253,13 @@ bindAddToken(handler){
 bindResetGrid(handler){
     this.resetGridModel = handler
 }
+
+bindUnlockModel(handler){
+    this.unlockModel = handler
+}
+
+bindEnableIA(handler){
+    this.enableIA = handler
+}
+
 }
