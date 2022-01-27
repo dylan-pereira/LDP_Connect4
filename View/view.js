@@ -111,7 +111,7 @@ addToken(column, row = 0, playerColor){
                 }
                 
             ball.vy *= .99;
-            ball.vy += .25;
+            ball.vy += .90;
             raf = window.requestAnimationFrame(draw);
             }else{
 
@@ -190,7 +190,7 @@ resetGrid(){
     this.createGrid();
 }
 
-createModal(){
+createModal(winnerText){
     let mymodal = document.createElement("div");
     mymodal.setAttribute("class", "modal");
     mymodal.id="myModal";
@@ -205,24 +205,21 @@ createModal(){
 
 
     let p = document.createElement("p");
-    p.innerHTML="TODO: ADD PLAYER NAME";
+    p.innerHTML=winnerText;
     div.appendChild(p);
 
     mymodal.appendChild(div);
     document.body.appendChild(mymodal);
 
     var modal = document.getElementById("myModal");
-    var btn = document.getElementById("myBtn");
     var span = document.getElementsByClassName("close")[0];
-    btn.onclick = function() {
-        modal.style.display = "block";
-    }
+    modal.style.display = "block";
     span.onclick = function() {
-        modal.style.display = "none";
+        mymodal.remove();
     }
     window.onclick = function(event) {
         if (event.target == modal) {
-            modal.style.display = "none";
+            mymodal.remove();
         }
     }
 
@@ -231,15 +228,14 @@ createModal(){
 createGameBoard(){
     this.createHeader();
     this.createGrid();
-    this.createModal();
 }
 
 win(player){
 
     if(player=="red"){
-        alert("Le joueurs 1 (rouge) a gagné");
+        this.createModal("Le joueurs 1 (rouge) a gagné");
     } else {
-        alert("Le joueur 2 (jaune) a gagné");
+        this.createModal("Le joueur 2 (jaune) a gagné");
     }
     this.resetGrid();
     this.resetGridModel();
