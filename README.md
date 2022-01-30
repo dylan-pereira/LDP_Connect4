@@ -4,7 +4,7 @@ Voici un portage du célèbre jeu puissance4 en JavaScript/HTML/CSS, avec tentat
 
 ### Pré-requis
 
-Un navigateur internet (tous les navigateurs sont pris en charge.
+Un navigateur internet (tous les navigateurs sont pris en charge).
 
 ### Installation
 
