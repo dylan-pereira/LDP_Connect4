@@ -1,67 +1,45 @@
 # LDP_Connect4
 
-_(juste en dessous des badges sympatiques à placer)_
-
-[![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)  [![forthebadge](http://forthebadge.com/images/badges/powered-by-electricity.svg)](http://forthebadge.com)
-
-Une petite description du projet
-
-## Pour commencer
-
-Entrez ici les instructions pour bien débuter avec votre projet...
+Voici un portage du célèbre jeu puissance4 en JavaScript/HTML/CSS, avec tentative d'implémentation de l'IA Mini-max. Le jeu de base se joue en joueur contre joueur.
 
 ### Pré-requis
 
-Ce qu'il est requis pour commencer avec votre projet...
-
-- Programme 1
-- Programme 2
-- etc...
+Un navigateur internet (tous les navigateurs sont pris en charge.
 
 ### Installation
 
-Les étapes pour installer votre programme....
+Linux/MacOS : 
 
-Dites ce qu'il faut faire...
+````
+git clone https://github.com/dylan-pereira/LDP_Connect4.git
+````
 
-_exemple_: Executez la commande ``telnet mapscii.me`` pour commencer ensuite [...]
+Windows : 
 
-
-Ensuite vous pouvez montrer ce que vous obtenez au final...
+- Téléchargez directement les fichiers depuis le repository.
 
 ## Démarrage
 
-Dites comment faire pour lancer votre projet
+Lancez LDP_Connect4/index.html avec votre navigateur (double-cliquer lance avec le navigateur par défaut).
+
+## Fonctionnement
+
+- A l'ouverture le jeu est automatique lancé (par défaut le joueur rouge commence).
+- le premier joueur à aligner 4 jetons gagne.
+- Pour jouer un jeton, il suffit de cliquer sur les boutons au dessus de la colonne de votre choix.
+- Les boutons s'illumine de la couleur du joueur actif.
+- Pour relancer une partie, sélectionner quel joueur commence depuis le menu de gauche puis cliquez sur "New Game".
+- Pour lancer une partie avec l'IA (expérimental), cochez la case correpondante dans le menu de gauche puis cliquez sur "New Game".
+- Le jeu redémarre automatiquement lorsqu'un joueur gagne.
 
 ## Fabriqué avec
 
-Entrez les programmes/logiciels/ressources que vous avez utilisé pour développer votre projet
-
-_exemples :_
-* [Materialize.css](http://materializecss.com) - Framework CSS (front-end)
-* [Atom](https://atom.io/) - Editeur de textes
-
-## Contributing
-
-Si vous souhaitez contribuer, lisez le fichier [CONTRIBUTING.md](https://example.org) pour savoir comment le faire.
-
-## Versions
-Listez les versions ici 
-_exemple :_
-**Dernière version stable :** 5.0
-**Dernière version :** 5.1
-Liste des versions : [Cliquer pour afficher](https://github.com/your/project-name/tags)
-_(pour le lien mettez simplement l'URL de votre projets suivi de ``/tags``)_
+* [VSCode](https://code.visualstudio.com/) - Editeur de textes
+* [Git](https://git-scm.com/) - Gestionnaire de version
 
 ## Auteurs
 Listez le(s) auteur(s) du projet ici !
-* **Jhon doe** _alias_ [@outout14](https://github.com/outout14)
-
-Lisez la liste des [contributeurs](https://github.com/your/project/contributors) pour voir qui à aidé au projet !
-
-_(pour le lien mettez simplement l'URL de votre projet suivi de ``/contirubors``)_
-
-## License
-
-Ce projet est sous licence ``exemple: WTFTPL`` - voir le fichier [LICENSE.md](LICENSE.md) pour plus d'informations
+* **Paulin Zumstein** _alias_ [@Paulin-Zumstein](https://github.com/Paulin-Zumstein)
+* **Luca DESLOT** _alias_ [@LucaDeslot](https://github.com/LucaDeslot)
+* **Dylan Pereira** _alias_ [@dylan-pereira](https://github.com/dylan-pereira)
 
