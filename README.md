@@ -32,6 +32,10 @@ Lancez LDP_Connect4/index.html avec votre navigateur (double-cliquer lance avec 
 - Pour lancer une partie avec l'IA (expérimental), cochez la case correspondante dans le menu de gauche puis cliquez sur "New Game".
 - Le jeu redémarre automatiquement lorsqu'un joueur gagne.
 
+## UML 
+
+![alt text](https://github.com/dylan-pereira/LDP_Connect4/blob/main/UML.png?raw=true)
+
 ## Fabriqué avec
 
 * [VSCode](https://code.visualstudio.com/) - Editeur de textes
